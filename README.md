@@ -8,21 +8,21 @@ A full-stack product management application built with the MERN stack, allowing 
 **Backend:** Node.js, Express.js, MongoDB Atlas, Mongoose, JWT, Multer  
 **Architecture:** MVC (Model - View - Controller)
 
-Backend setup
+##Backend setup
 Create a `.env` file in `app-server/`:
 
 ```env
 CONNECTION_STRING=your_mongodb_atlas_connection_string
 SECRET_KEY=your_jwt_secret_key
 ```
-Start the server:
+**Start the server:
 nodemon
-Backend runs on `http://localhost:3001`
+**Backend runs on `http://localhost:3001`
 
-Frontend Setup
-Start the server:
+##Frontend Setup
+**Start the server:
 npm run dev
-Frontend runs on `http://localhost:5173`
+**Frontend runs on `http://localhost:5173`
 
 ## Deployment
 

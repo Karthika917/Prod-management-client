@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import baseUrl from "../../services/base_url";
 
 function ProductForm({ subCategories, onSubmit, onClose, initialData }) {
   const [title, setTitle] = useState("");
@@ -10,7 +11,7 @@ function ProductForm({ subCategories, onSubmit, onClose, initialData }) {
     { ram: "", price: "", qty: 1 },
   ])
 
-  // ✅ Prefill form when editing
+
   useEffect(() => {
     if (initialData) {
       setTitle(initialData.title || "");
@@ -31,34 +32,34 @@ function ProductForm({ subCategories, onSubmit, onClose, initialData }) {
     setVariants([...variants, { ram: "", price: "", qty: 1 }]);
   };
 
-  // ✅ Remove variant (important feature)
+  
   const removeVariant = (index) => {
     if (variants.length === 1) return;
     const updated = variants.filter((_, i) => i !== index);
     setVariants(updated);
   };
 
-  // ✅ Update variant fields
+ 
   const updateVariant = (index, field, value) => {
     const updated = [...variants];
     updated[index][field] = value;
     setVariants(updated);
   };
 
-  // ✅ Quantity control
+  
   const changeQty = (index, delta) => {
     const updated = [...variants];
     updated[index].qty = Math.max(1, updated[index].qty + delta);
     setVariants(updated);
   };
 
-  // ✅ Remove existing image (edit mode)
+  
   const removeExistingImage = (index) => {
     const updated = existingImages.filter((_, i) => i !== index);
     setExistingImages(updated);
   };
 
-  // ✅ Submit
+
   const handleSubmit = () => {
     if (!title.trim() || !subCategory) {
       alert("Title and SubCategory required");
@@ -79,7 +80,7 @@ function ProductForm({ subCategories, onSubmit, onClose, initialData }) {
     formData.append("subCategory", subCategory);
     formData.append("variants", JSON.stringify(cleanedVariants));
 
-    // existing images (important for edit)
+    // existing images 
     formData.append("existingImages", JSON.stringify(existingImages));
 
     // new images
@@ -90,12 +91,12 @@ function ProductForm({ subCategories, onSubmit, onClose, initialData }) {
 
   return (
     <div>
-      {/* TITLE */}
+      
       <h3 className="pf-title">
         {initialData ? "Edit Product" : "Add Product"}
       </h3>
 
-      {/* TITLE INPUT */}
+   
       <div className="pf-row">
         <span className="pf-label">Title :</span>
         <input
@@ -106,7 +107,7 @@ function ProductForm({ subCategories, onSubmit, onClose, initialData }) {
         />
       </div>
 
-      {/* VARIANTS */}
+    
       <div className="pf-row pf-row--top">
         <span className="pf-label pf-label--top">Variants :</span>
 
@@ -147,7 +148,7 @@ function ProductForm({ subCategories, onSubmit, onClose, initialData }) {
                 ›
               </button>
 
-              {/* REMOVE VARIANT */}
+             
               <button
                 className="pf-remove-variant"
                 onClick={() => removeVariant(i)}
@@ -165,7 +166,7 @@ function ProductForm({ subCategories, onSubmit, onClose, initialData }) {
         </div>
       </div>
 
-      {/* SUBCATEGORY */}
+      
       <div className="pf-row">
         <span className="pf-label">Sub category :</span>
 
@@ -188,7 +189,7 @@ function ProductForm({ subCategories, onSubmit, onClose, initialData }) {
         </div>
       </div>
 
-      {/* DESCRIPTION */}
+    
       <div className="pf-row pf-row--top">
         <span className="pf-label pf-label--top">Description :</span>
 
@@ -200,18 +201,18 @@ function ProductForm({ subCategories, onSubmit, onClose, initialData }) {
         />
       </div>
 
-      {/* IMAGES */}
+   
       <div className="pf-row pf-row--top">
         <span className="pf-label pf-label--top">Upload image:</span>
 
         <div className="pf-images">
 
-          {/* Existing images (edit mode) */}
+        {/* existing images */}
           {existingImages.map((img, i) => (
             <div key={i} className="pf-img-wrapper">
               <img
                 className="pf-img-thumb"
-                src={`http://localhost:3001/uploads/${img}`}
+                src={`${baseUrl}/uploads/${img}`}
                 alt=""
               />
               <button

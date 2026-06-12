@@ -4,7 +4,7 @@ A full-stack product management application built with the MERN stack, allowing 
 
 ## Live Demo
 
-- Deployed link : https://prod-management-server.onrender.com
+- Deployed link : https://prod-management-client.vercel.app/
 
 ---
 

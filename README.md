@@ -2,6 +2,10 @@
 
 A full-stack product management application built with the MERN stack, allowing users to manage categories, subcategories, and products with variants. Includes wishlist, search, filter, and pagination features.
 
+## Live Demo
+
+- Deployed link : https://prod-management-server.onrender.com
+
 ---
 
 ## Tech Stack
@@ -53,4 +57,4 @@ Frontend runs on `http://localhost:5173`
 - **Frontend** hosted on Vercel
 - **Backend** hosted on Render
 
-> Note: Product images are stored in the local `uploads/` folder. 
+> Note: Product images are stored in the local `uploads/` folder.

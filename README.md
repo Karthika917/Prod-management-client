@@ -1,16 +1,33 @@
-# React + Vite
+# Product Management App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack product management application built with the MERN stack, allowing users to manage categories, subcategories, and products with variants. Includes wishlist, search, filter, and pagination features.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+**Frontend:** React, Vite, Bootstrap, React Router DOM, React Toastify  
+**Backend:** Node.js, Express.js, MongoDB Atlas, Mongoose, JWT, Multer  
+**Architecture:** MVC (Model - View - Controller)
 
-## React Compiler
+Backend setup
+Create a `.env` file in `app-server/`:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```env
+CONNECTION_STRING=your_mongodb_atlas_connection_string
+SECRET_KEY=your_jwt_secret_key
+```
+Start the server:
+nodemon
+Backend runs on `http://localhost:3001`
 
-## Expanding the ESLint configuration
+Frontend Setup
+Start the server:
+npm run dev
+Frontend runs on `http://localhost:5173`
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Deployment
+
+- **Frontend** hosted on Vercel
+- **Backend** hosted on Render
+
+> Note: Product images are stored in the local `uploads/` folder.  
+

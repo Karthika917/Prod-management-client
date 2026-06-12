@@ -1062,3 +1062,32 @@ body {
   font-weight: 600;
   color: #000;
 }
+
+@media (max-width: 767px) {
+  .home-sidebar {
+    display: none;
+  }
+
+  .home-product-area {
+    padding: 10px;
+  }
+
+  .home-product-img {
+    height: 150px;
+  }
+
+  .home-breadcrumb-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .home-action-btn {
+    font-size: 11px;
+    padding: 5px 10px;
+  }
+
+  .home-pagination-info {
+    display: none;
+  }
+}

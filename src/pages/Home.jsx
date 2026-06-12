@@ -35,8 +35,7 @@ function Home() {
   // pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage, setProductsPerPage] = useState(10);
-
-  const [showSidebar, setShowSidebar] = useState(false);
+  
 
   const filteredProducts = products.filter((p) => {
     const matchesSearch = p.title.toLowerCase().includes(searchQuery.toLowerCase());
@@ -93,12 +92,6 @@ function Home() {
           <div className="d-flex align-items-center gap-1">
             <span className="home-breadcrumb-text">Home</span>
             <FiChevronRight size={13} color="#888" />
-            <button
-              className="home-filter-toggle d-md-none"
-              onClick={() => setShowSidebar(!showSidebar)}
-            >
-              ☰ Filter
-            </button>
           </div>
           <div className="d-flex gap-2">
             <button className="home-action-btn" onClick={() => setShowCategory(true)}>Add category</button>
@@ -110,18 +103,15 @@ function Home() {
         <div className="d-flex">
 
           {/* Sidebar */}
-          <div className={`d-none d-md-block ${showSidebar ? "d-block" : ""}`}>
-            <Sidebar
-              categories={groupedData}
-              onSelectSubCategory={(id) => {
-                if (id === null) { setSelectedSubId(null); }
-                else { setSelectedSubId(prev => prev === id ? null : id); }
-                setCurrentPage(1);
-                setShowSidebar(false);
-              }}
-              selectedSubId={selectedSubId}
-            />
-          </div>
+          <Sidebar categories={groupedData} onSelectSubCategory={(id) => {
+            if (id === null) {
+              setSelectedSubId(null);
+            } else {
+              setSelectedSubId(prev => prev === id ? null : id);
+            }
+            setCurrentPage(1);
+          }} />
+
           {/* Product section*/}
           <div className="home-product-area">
             <div className="row g-3">
@@ -167,40 +157,40 @@ function Home() {
 
             {/* Pagination */}
             <div className="d-flex align-items-center justify-content-between mt-4 flex-wrap gap-2">
+  
+  <span className="home-pagination-info">
+    {Math.min(currentPage * productsPerPage, totalItems)} of {totalItems} items
+  </span>
 
-              <span className="home-pagination-info">
-                {Math.min(currentPage * productsPerPage, totalItems)} of {totalItems} items
-              </span>
+  <div className="d-flex align-items-center justify-content-center gap-1">
+    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+      <div
+        key={page}
+        className={`home-pagination-btn ${currentPage === page ? "active" : ""}`}
+        onClick={() => setCurrentPage(page)}
+      >
+        {page}
+      </div>
+    ))}
+  </div>
 
-              <div className="d-flex align-items-center justify-content-center gap-1">
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                  <div
-                    key={page}
-                    className={`home-pagination-btn ${currentPage === page ? "active" : ""}`}
-                    onClick={() => setCurrentPage(page)}
-                  >
-                    {page}
-                  </div>
-                ))}
-              </div>
+  <div className="d-flex align-items-center gap-1">
+    <span className="home-pagination-info">Show</span>
+    <select
+      className="home-rows-select"
+      value={productsPerPage}
+      onChange={(e) => {
+        setProductsPerPage(Number(e.target.value));
+        setCurrentPage(1);
+      }}
+    >
+      <option value={4}>4 rows</option>
+      <option value={8}>8 rows</option>
+      <option value={12}>12 rows</option>
+    </select>
+  </div>
 
-              <div className="d-flex align-items-center gap-1">
-                <span className="home-pagination-info">Show</span>
-                <select
-                  className="home-rows-select"
-                  value={productsPerPage}
-                  onChange={(e) => {
-                    setProductsPerPage(Number(e.target.value));
-                    setCurrentPage(1);
-                  }}
-                >
-                  <option value={4}>4 rows</option>
-                  <option value={8}>8 rows</option>
-                  <option value={12}>12 rows</option>
-                </select>
-              </div>
-
-            </div>
+</div>
 
           </div>
         </div>

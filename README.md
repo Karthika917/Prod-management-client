@@ -36,8 +36,6 @@ Start the server:
 nodemon
 ```
 
-Backend runs on `http://localhost:3001`
-
 ---
 
 ## Frontend Setup
@@ -47,9 +45,6 @@ cd app-client/product-management
 npm install
 npm run dev
 ```
-
-Frontend runs on `http://localhost:5173`
-
 ---
 
 ## Deployment

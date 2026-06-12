@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FiChevronRight, FiChevronDown } from "react-icons/fi";
 
-function Sidebar({ categories }) {
+function Sidebar({ categories, onSelectSubCategory, selectedSubId }) {
   const [openId, setOpenId] = useState(null);
 
   const toggle = (id) => {
@@ -11,10 +11,16 @@ function Sidebar({ categories }) {
   return (
     <div className="home-sidebar">
       <div className="home-sidebar-title">Categories</div>
+      <div
+        className={`home-brand-item ${selectedSubId === null ? "active" : ""}`}
+        onClick={() => onSelectSubCategory(null)}
+      >
+        All
+      </div>
 
       {categories.map((cat) => (
         <div key={cat._id}>
-          
+
           {/* Category */}
           <div
             className="home-cat-item"
@@ -31,7 +37,11 @@ function Sidebar({ categories }) {
           {/* Subcategories */}
           {openId === cat._id &&
             cat.subCategories.map((sub) => (
-              <div key={sub._id} className="home-brand-item">
+              <div
+                key={sub._id}
+                className={`home-brand-item ${selectedSubId === sub._id ? "active" : ""}`}
+                onClick={() => onSelectSubCategory(sub._id)}
+              >
                 • {sub.name}
               </div>
             ))}

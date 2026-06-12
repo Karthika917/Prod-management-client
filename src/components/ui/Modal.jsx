@@ -20,8 +20,8 @@ function Modal({ isOpen, onClose, children, width = "400px" }) {
           background: "#fff",
           padding: "28px 28px 24px",
           borderRadius: "8px",
-          width: width,           // 👈 dynamic width
-          maxWidth: "95vw",       // 👈 responsive on small screens
+          width: width,
+          maxWidth: "95vw",
           boxSizing: "border-box",
         }}
         onClick={(e) => e.stopPropagation()}

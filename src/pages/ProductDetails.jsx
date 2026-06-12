@@ -3,16 +3,31 @@ import { FiHeart, FiChevronRight, FiMinus, FiPlus } from "react-icons/fi";
 import { FiCheckCircle } from "react-icons/fi";
 import Navbar from "../components/Navbar";
 import { Link, useParams } from "react-router-dom";
-import { getProductbyIdApi } from "../services/allApi";
+import { getProductbyIdApi, updateProductApi, getsubcategoryApi } from "../services/allApi";
+import ProductForm from "../components/forms/productForm";
+import { FaHeart } from "react-icons/fa";
+import { useWishlist } from "../contextApi/WishlistContext";
 
 function ProductDetails() {
   const { id } = useParams();
+
+  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [editData, setEditData] = useState(null);
 
   const [product, setProduct] = useState(null);
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [qty, setQty] = useState(1);
   const [mainImage, setMainImage] = useState("");
-  
+  const [subCategories, setSubCategories] = useState([]);
+
+  const { toggleWishlist, isWishlisted } = useWishlist();
+
+  const openEdit = () => {
+    if (!product) return;
+
+    setEditData({ ...product });
+    setIsEditOpen(true);
+  };
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -27,19 +42,55 @@ function ProductDetails() {
     fetchProduct();
   }, [id]);
 
-  if (!product) return <div>Loading...</div>;
+  useEffect(() => {
+    const fetchSubCategories = async () => {
+      try {
+        const res = await getsubcategoryApi();
+        setSubCategories(res.data?.subCategories || []);
+
+
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchSubCategories();
+  }, []);
+
+  if (!product) return (
+  <div className="d-flex align-items-center justify-content-center" style={{ height: "100vh" }}>
+    <div className="spinner-border text-warning" role="status" />
+  </div>
+);
 
   const increaseQty = () => setQty((q) => q + 1);
   const decreaseQty = () => setQty((q) => (q > 1 ? q - 1 : 1));
 
+  const handleUpdateProduct = async (formData) => {
+    try {
+      await updateProductApi(id, formData);
+
+      const res = await getProductbyIdApi(id);
+      const data = res.data;
+
+      setProduct(data);
+      setSelectedVariant(data.variants?.[0]);
+      setMainImage(data.images?.[0]);
+
+      setIsEditOpen(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  console.log("subCategories in ProductDetails:", subCategories)
   return (
     <>
       <div className="pd-page">
         <Navbar />
 
-        {/* BREADCRUMB */}
+
         <div className="pd-breadcrumb-bar d-flex align-items-center gap-2">
-          <Link to="/" className="pd-breadcrumb-home">Home</Link>
+          <Link to="/home" className="pd-breadcrumb-home">Home</Link>
           <FiChevronRight size={13} color="#888" />
           <span className="pd-breadcrumb-current">{product.title}</span>
         </div>
@@ -77,18 +128,17 @@ function ProductDetails() {
               </div>
             </div>
 
-            {/* RIGHT - INFO */}
             <div className="col-12 col-md-7">
               <div className="pd-card">
 
                 <h2 className="pd-product-title">{product.title}</h2>
 
-                {/* PRICE */}
+
                 <div className="pd-product-price">
                   ₹{selectedVariant?.price}
                 </div>
 
-                {/* STOCK */}
+
                 <div className="d-flex align-items-center gap-2 mb-1">
                   <span className="pd-label">Availability:</span>
                   <span className="pd-in-stock-badge">
@@ -111,9 +161,8 @@ function ProductDetails() {
                     {product.variants?.map((v, i) => (
                       <button
                         key={i}
-                        className={`pd-ram-btn ${
-                          selectedVariant?.ram === v.ram ? "pd-ram-btn-active" : ""
-                        }`}
+                        className={`pd-ram-btn ${selectedVariant?.ram === v.ram ? "pd-ram-btn-active" : ""
+                          }`}
                         onClick={() => setSelectedVariant(v)}
                       >
                         {v.ram}
@@ -139,14 +188,17 @@ function ProductDetails() {
                   </div>
                 </div>
 
-                {/* ACTIONS */}
+
                 <div className="d-flex align-items-center gap-2">
-                  <button className="pd-edit-btn">Edit product</button>
+                  <button className="pd-edit-btn" onClick={openEdit}>Edit product</button>
                   <button className="pd-buy-btn">
                     Buy it now
                   </button>
-                  <button className="pd-wishlist-btn">
-                    <FiHeart size={18} />
+                  <button className="pd-wishlist-btn" onClick={() => toggleWishlist(product)}>
+                    {isWishlisted(product._id)
+                      ? <FaHeart size={18} color="red" />
+                      : <FiHeart size={18} />
+                    }
                   </button>
                 </div>
 
@@ -155,6 +207,22 @@ function ProductDetails() {
 
           </div>
         </div>
+        {isEditOpen && (
+          <div className="pd-modal-overlay" onClick={() => setIsEditOpen(false)}>
+
+            <div
+              className="pd-modal-content"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <ProductForm
+                subCategories={subCategories}
+                onSubmit={handleUpdateProduct}
+                onClose={() => setIsEditOpen(false)}
+                initialData={editData}
+              />
+            </div>
+          </div>
+        )}
       </div>
     </>
   );

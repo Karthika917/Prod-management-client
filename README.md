@@ -57,4 +57,4 @@ Frontend runs on `http://localhost:5173`
 - **Frontend** hosted on Vercel
 - **Backend** hosted on Render
 
-> Note: Product images are stored in the local `uploads/` folder.
+> Note: Product images are stored in the local `uploads/` folder.For production, a cloud storage solution like Cloudinary is recommended.

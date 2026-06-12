@@ -1065,7 +1065,16 @@ body {
 
 @media (max-width: 767px) {
   .home-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 1000;
     display: none;
+  }
+
+  .d-block .home-sidebar {
+    display: block;
   }
 
   .home-product-area {
@@ -1090,4 +1099,15 @@ body {
   .home-pagination-info {
     display: none;
   }
+}
+
+.home-filter-toggle {
+  background: #f5a623;
+  border: none;
+  border-radius: 6px;
+  padding: 5px 12px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
 }

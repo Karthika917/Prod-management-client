@@ -12,6 +12,7 @@ import { toast } from 'react-toastify';
 import SubCategoryForm from '../components/forms/subcategoryForm';
 import ProductForm from '../components/forms/productForm';
 import { useWishlist } from '../contextApi/WishlistContext';
+import baseUrl from '../services/base_url';
 
 function Home() {
 
@@ -129,7 +130,7 @@ function Home() {
                       <img
                         src={
                           product.images?.[0]
-                            ? `http://localhost:3001/uploads/${product.images[0]}`
+                            ? `${baseUrl}/uploads/${product.images[0]}`
                             : "https://via.placeholder.com/200x140?text=No+Image"
                         }
                         alt={product.title}

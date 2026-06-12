@@ -7,6 +7,7 @@ import { getProductbyIdApi, updateProductApi, getsubcategoryApi } from "../servi
 import ProductForm from "../components/forms/productForm";
 import { FaHeart } from "react-icons/fa";
 import { useWishlist } from "../contextApi/WishlistContext";
+import baseUrl from "../services/base_url";
 
 function ProductDetails() {
   const { id } = useParams();
@@ -103,7 +104,7 @@ function ProductDetails() {
               <div className="pd-card">
 
                 <img
-                  src={`http://localhost:3001/uploads/${mainImage}`}
+                  src={`${baseUrl}/uploads/${mainImage}`}
                   alt="Product"
                   className="pd-main-img"
                 />
@@ -112,7 +113,7 @@ function ProductDetails() {
                   {product.images?.map((img, i) => (
                     <div className="col-3" key={i}>
                       <img
-                        src={`http://localhost:3001/uploads/${img}`}
+                        src={`${baseUrl}/uploads/${img}`}
                         alt="thumb"
                         className="pd-thumb-img"
                         onClick={() => setMainImage(img)}

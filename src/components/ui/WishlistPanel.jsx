@@ -1,5 +1,6 @@
 import { useWishlist } from "../../contextApi/WishlistContext";
 import { FiX, FiTrash2 } from "react-icons/fi";
+import baseUrl from "../../services/base_url";
 
 function WishlistPanel({ isOpen, onClose }) {
     const { wishlist, toggleWishlist } = useWishlist();
@@ -24,7 +25,7 @@ function WishlistPanel({ isOpen, onClose }) {
                             <img
                                 src={
                                     product.images?.[0]
-                                        ? `http://localhost:3001/uploads/${product.images[0]}`
+                                        ? `${baseUrl}/uploads/${product.images[0]}`
                                         : "https://via.placeholder.com/60x60?text=No+Image"
                                 }
                                 alt={product.title}
